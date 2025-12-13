@@ -193,10 +193,10 @@ button.addEventListener("click", () => {
 
 // Rotorazer
 rotorazerBasic.addEventListener("click", () => {
-    buttonSkip(149);
+    buttonSkip(149.85);
 });
 rotorazerPlatinum.addEventListener("click", () => {
-    buttonSkip(195);
+    buttonSkip(194.7);
 });
 
 // Salud y Suplementos
@@ -210,7 +210,7 @@ beflexible.addEventListener("click", () => {
     buttonSkip(39.95);
 });
 superthotics.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(39.95);
 });
 walkfitPlatinum.addEventListener("click", () => {
     buttonSkip(19.95);
@@ -218,84 +218,85 @@ walkfitPlatinum.addEventListener("click", () => {
 
 // AirDoctor Unidades
 ad1000.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(419);
 });
 ad2000.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(409);
 });
 ad3500.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(659);
 });
 ad3500i.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(709);
 });
 ad4000.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(799);
 });
 ad5500.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(999);
 });
 ad5500i.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(1049);
 });
 
 // Filtros AD 1000
 ad1000set.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(84.95);
 });
 
 // Filtros AD 2000
 ad2000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(120.57);
 });
 ad2000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(226.98);
 });
 ad2000Hepa.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(47.95);
 });
 ad2000Carbon.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(46.95);
 });
 ad2000Prefilter.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(15.99);
 });
 
 // Filtros AD 3000 / 3500
 ad3000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(162.99);
 });
 ad3000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(305.89);
 });
 ad3000Hepa.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(63.95);
 });
 ad3000Carbon.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(63.95);
 });
 ad3000Prefilter.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(20.95);
 });
 
 // Filtros AD 4000
 ad4000set.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(89.95);
 });
 
 // Filtros AD 5000 / 5500
 ad5000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(335.75);
 });
 ad5000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(637.99);
 });
 ad5000Hepa.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(133);
 });
 ad5000Carbon.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(131);
 });
 ad5000Prefilter.addEventListener("click", () => {
-    buttonSkip(5);
+    buttonSkip(35);
 });
+
