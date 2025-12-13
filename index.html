@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="slider-container">
+
+   <div>
+   
+     <div class="reglade3">
+        <div class="reglade3-2">
+            <div>
+                <input id="valor1" type="text" placeholder="$">
+            </div>
+            <div class="equal">=</div>
+            <div>
+                <input id="valor2" type="text" placeholder="%">
+            </div>
+        </div>
+
+        <div class="reglade3-3">
+            <div>
+                <input id="valor3" type="text" placeholder="$">
+            </div>
+            <div class="equal">=</div>
+            <div>
+                <input id="valor4" type="text" placeholder="%">
+            </div>
+        </div>
+
+        <div class="botones2">
+            <button id="button" class="btn-primary">Calculate</button>
+            <button id="delete" class="btn-primary">delete</button>
+        </div>
+        
+    </div>
+
+    <div class="grafico">
+
+        <div id="label-top-75" class="label">75%</div>
+        <div id="label-top2-75" class="label">0</div>
+
+        <div id="label-top-80" class="label">80%</div>
+        <div id="label-top2-80" class="label">0</div>
+
+        <div id="label-top-90" class="label">90%</div>
+        <div id="label-top2-90" class="label">0</div>
+
+        <div id="label-top" class="label">100%</div>
+        <div id="label-top2" class="label">0</div>
+
+        <input type="range" id="slider" min="0" max="100" step="1" value="0">
+
+        <div id="label-bottom" class="label">0%</div>
+        <div id="label-bottom2" class="label">0</div>
+    </div>
+
+   </div>
+
+    <div class="botones">
+        <button id="rotorazerBasic" class="btn-secondary">Rotorazer Basic</button>
+        <button id="rotorazerPlatinum" class="btn-secondary">Rotorazer Platinum</button>
+       
+        <!-- Salud y Suplementos -->
+        <button id="ingestibles" class="btn-secondary">ingestibles</button>
+        <button id="ingestiblesplus" class="btn-secondary">ingestibles plus</button>
+        <button id="beflexible" class="btn-secondary">BeFlexible</button>
+        <button id="superthotics" class="btn-secondary">Superthotics</button>
+        <button id="walkfitPlatinum" class="btn-secondary">WalkFit Platinum</button>
+
+        <!-- AirDoctor Unidades -->
+        <button id="ad1000" class="btn-secondary">AirDoctor 1000</button>
+        <button id="ad2000" class="btn-secondary">AirDoctor 2000</button>
+        <button id="ad3500" class="btn-secondary">AirDoctor 3500</button>
+        <button id="ad3500i" class="btn-secondary">AirDoctor 3500i</button>
+        <button id="ad4000" class="btn-secondary">AirDoctor 4000</button>
+        <button id="ad5500" class="btn-secondary">AirDoctor 5500</button>
+        <button id="ad5500i" class="btn-secondary">AirDoctor 5500i</button>
+
+        <!-- AirDoctor Filtros AD 1000 -->
+        <button id="ad1000set" class="btn-secondary">AD1000 filter set</button>
+        
+
+        <!-- AirDoctor Filtros AD 2000 -->
+        <button id="ad2000OneYearComboPack" class="btn-secondary">AD2000 One Year combo pack</button>
+        <button id="ad2000TwoYearComboPack" class="btn-secondary">AD2000 Two Year combo pack</button>
+        <button id="ad2000Hepa" class="btn-secondary">AD2000 UltraHEPA Filter</button>
+        <button id="ad2000Carbon" class="btn-secondary">AD2000 Carbon filter</button>
+        <button id="ad2000Prefilter" class="btn-secondary">AD2000 Pre-Filter</button>
+
+        <!-- AirDoctor Filtros AD 3500-->
+        <button id="ad3000OneYearComboPack" class="btn-secondary">AD3000 One Year combo pack</button>
+        <button id="ad3000TwoYearComboPack" class="btn-secondary">AD3000 Two Year combo pack</button>
+        <button id="ad3000Hepa" class="btn-secondary">AD3000 UltraHEPA Filter</button>
+        <button id="ad3000Carbon" class="btn-secondary">AD3000 Carbon filter</button>
+        <button id="ad3000Prefilter" class="btn-secondary">AD3000 Pre-Filter</button>
+
+        <!-- AirDoctor Filtros AD 4000 -->
+        <button id="ad4000set" class="btn-secondary">AD4000 filter set</button>
+
+        <!-- AirDoctor Filtros AD 5500-->
+        <button id="ad5000OneYearComboPack" class="btn-secondary">AD5000 One Year combo pack</button>
+        <button id="ad5000TwoYearComboPack" class="btn-secondary">AD5000 Two Year combo pack</button>
+        <button id="ad5000Hepa" class="btn-secondary">AD5000 UltraHEPA Filter</button>
+        <button id="ad5000Carbon" class="btn-secondary">AD5000 Carbon filter</button>
+        <button id="ad5000Prefilter" class="btn-secondary">AD5000 Pre-Filter</button>
+
+    </div>
+
+</div>
+
+<script src="code.js"></script>
+</body>
+</html>
