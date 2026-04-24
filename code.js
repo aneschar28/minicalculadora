@@ -1,23 +1,21 @@
-const slider = document.getElementById("slider");
-
-const labeltop75 = document.getElementById("label-top-75");
-const labeltop2_75 = document.getElementById("label-top2-75");
-const labeltop80 = document.getElementById("label-top-80");
-const labeltop2_80 = document.getElementById("label-top2-80");
-const labeltop90 = document.getElementById("label-top-90");
-const labeltop2_90 = document.getElementById("label-top2-90");
-const labeltop = document.getElementById("label-top");
-const labeltop2 = document.getElementById("label-top2");
-const labelBottom = document.getElementById("label-bottom");
-const labelBottom2 = document.getElementById("label-bottom2");
-
 const valor1 = document.getElementById("valor1");
 const valor2 = document.getElementById("valor2");
 const valor3 = document.getElementById("valor3");
 const valor4 = document.getElementById("valor4");
 
+
 const button = document.getElementById("button");
 const deletebotton = document.getElementById("delete");
+
+const labelBottom = document.getElementById("label-bottom");
+const labelBottom2 = document.getElementById("label-bottom2");
+const labelBottom3 = document.getElementById("label-bottom3");
+
+const labelBottomR = document.getElementById("label-bottomR");
+const labelBottom2R = document.getElementById("label-bottom2R");
+const labelBottom3R = document.getElementById("label-bottom3R");
+
+const slider = document.getElementById("slider");
 
 // Rotorazer
 const rotorazerBasic = document.getElementById("rotorazerBasic");
@@ -66,280 +64,440 @@ const ad5000Hepa = document.getElementById("ad5000Hepa");
 const ad5000Carbon = document.getElementById("ad5000Carbon");
 const ad5000Prefilter = document.getElementById("ad5000Prefilter");
 
-function calcular2() {
-    slider.value = valor4.value;
+let total = 0;
 
-    labeltop90.innerHTML = `${(Number(valor2.value) * 0.90).toFixed(2)}%`;
-    labeltop2_90.innerHTML = `${(Number(valor1.value) * 0.90).toFixed(2)}$`;
 
-    labeltop80.innerHTML = `${(Number(valor2.value) * 0.80).toFixed(2)}%`;
-    labeltop2_80.innerHTML = `${(Number(valor1.value) * 0.80).toFixed(2)}$`;
+function pintarBarra(slider) {
+  const min = slider.min || 0;
+  const max = slider.max || 100;
+  const value = slider.value;
 
-    labeltop75.innerHTML = `${(Number(valor2.value) * 0.75).toFixed(2)}%`;
-    labeltop2_75.innerHTML = `${(Number(valor1.value) * 0.75).toFixed(2)}$`;
+  const percent = ((value - min) / (max - min)) * 100;
 
-    labeltop.innerHTML = `${(Number(valor2.value) * 1).toFixed(2)}%`;
-    labeltop2.innerHTML = `${(Number(valor1.value) * 1).toFixed(2)}$`;
-
-    labelBottom.innerHTML = `0%`;
-    labelBottom2.innerHTML = `0$`;
-
-    slider.value = 0;
-    labelBottom.style.left = "0px";
-    labelBottom2.style.left = "0px";
+  slider.style.background = `
+    linear-gradient(
+      to right,
+      #1F3A5F 0%,
+      #1F3A5F ${percent}%,
+      #F6F1E9 ${percent}%,
+      #F6F1E9 100%
+    )
+  `;
 }
 
+function round2(n) {
+    return Math.round((Number(n) + Number.EPSILON) * 100) / 100;
+}
+
+function money(n) {
+    return `${round2(n).toFixed(2)}`;
+}
+
+function percent(n) {
+    return round2(n);
+}
+
+function calcular2() {
+    const value = percent(slider.value);
+    const total = round2(valor1.value);
+    const taxes = round2(valor4.value);
+
+    const leftValue = round2((value / 100) * total);
+    const leftTaxes = round2((value / 100) * taxes);
+
+    const rightValue = round2(total - leftValue);
+    const rightTaxes = round2(taxes - leftTaxes);
+
+    labelBottom.innerHTML = `${value}%`;
+    labelBottom2.innerHTML = money(leftValue);
+    labelBottom3.innerHTML = `Taxes:${money(leftTaxes)}`;
+
+    labelBottomR.innerHTML = `${100 - value}%`;
+    labelBottom2R.innerHTML = money(rightValue);
+    labelBottom3R.innerHTML = `Taxes:${money(rightTaxes)}`;
+}
+
+
 function calcular() {
-    if (Number(valor2.value) > 100) {
-        alert("el total no puede ser mas del 100%");
-    }
-
     const ok = [valor1.value, valor2.value, valor3.value, valor4.value]
-        .filter(Boolean).length;
+    .filter(v => v !== "");
 
-    if (ok === 3) {
+    function arraysIguales(a, b) {
+      if (a.length !== b.length) return false;
 
-        if (valor4.value === "") {
-            valor4.value = ((Number(valor2.value) * Number(valor3.value)) / Number(valor1.value)).toFixed(2);
+        for (let i = 0; i < a.length; i++) {
+            if (a[i] !== b[i]) return false;
         }
 
+        return true;
+    }
+
+    let caso1 = arraysIguales (ok,[valor1.value]);
+    let caso2 = arraysIguales (ok,[valor1.value,valor2.value]);
+    let caso3 = arraysIguales (ok,[valor1.value,valor3.value]);
+    let caso4 = arraysIguales (ok,[valor2.value,valor3.value]);
+    let caso5 = arraysIguales (ok,[valor1.value,valor4.value]);
+    let caso6 = arraysIguales (ok,[valor1.value, valor2.value, valor4.value]); //me parece que son casos obsoletos, por ahora no los tender en cuenta
+    let caso7 = arraysIguales (ok,[valor1.value, valor3.value, valor4.value]);
+    let caso8 = arraysIguales (ok,[valor2.value, valor3.value, valor4.value]); //me parece que son casos obsoletos, por ahora no los tender en cuenta
+
+    if (caso2 || caso3 || caso4) {
+
+        const v1 = round2(valor1.value);
+        const v2 = round2(valor2.value);
+        const v3 = round2(valor3.value);
+
         if (valor3.value === "") {
-            valor3.value = ((Number(valor1.value) * Number(valor4.value)) / Number(valor2.value)).toFixed(2);
+            valor3.value = money((v1 * v2) / 100);
         }
 
         if (valor2.value === "") {
-            valor2.value = ((Number(valor1.value) * Number(valor4.value)) / Number(valor3.value)).toFixed(2);
+            valor2.value = percent((100 * v3) / v1);
         }
 
         if (valor1.value === "") {
-            valor1.value = ((Number(valor2.value) * Number(valor3.value)) / Number(valor4.value)).toFixed(2);
+            valor1.value = money((100 * v3) / v2);
         }
 
-        labeltop90.innerHTML = `${(Number(valor2.value) * 0.90).toFixed(2)}%`;
-        labeltop2_90.innerHTML = `${(Number(valor1.value) * 0.90).toFixed(2)}$`;
+        slider.value = percent(valor2.value);
+        pintarBarra(slider);
 
-        labeltop80.innerHTML = `${(Number(valor2.value) * 0.80).toFixed(2)}%`;
-        labeltop2_80.innerHTML = `${(Number(valor1.value) * 0.80).toFixed(2)}$`;
+        updateLabels();
 
-        labeltop75.innerHTML = `${(Number(valor2.value) * 0.75).toFixed(2)}%`;
-        labeltop2_75.innerHTML = `${(Number(valor1.value) * 0.75).toFixed(2)}$`;
+        valor2.value="";
+        valor3.value="";
 
-        labeltop.innerHTML = `${(Number(valor2.value) * 1).toFixed(2)}%`;
-        labeltop2.innerHTML = `${(Number(valor1.value) * 1).toFixed(2)}$`;
 
-        labelBottom.innerHTML = `${valor4.value}%`;
-        labelBottom2.innerHTML = `${valor3.value}$`;
+    } else if (caso1 || caso5) {
 
-        slider.value = valor4.value;
-
-        const value = slider.value;
-        const sliderWidth = slider.offsetWidth;
-        const thumbPos = (value / slider.max) * sliderWidth;
-
-        labelBottom.innerHTML = `${value}%`;
-        labelBottom2.innerHTML = `${Number(((value / 100) * Number(valor1.value)).toFixed(2))}$`;
-
-        labelBottom.style.left = thumbPos + "px";
-        labelBottom2.style.left = thumbPos + "px";
-
-    } else if (ok === 2) {
         calcular2();
+
+    } else if (caso7){
+        const v1 = round2(valor1.value);
+        const v3 = round2(valor3.value);
+        const v4 = round2(valor4.value);
+        
+
+        if (valor2.value === "") {
+            const v2 = money((v3 / v1) * 100);
+
+            valor2.value = v2;
+
+            valor4.value = money((v4 / v2) * 100);
+
+        }
+
+        slider.value = percent(valor2.value);
+        pintarBarra(slider);
+
+        updateLabels();
+
+        valor2.value="";
+        valor3.value="";
     }
 }
 
+
 function updateLabels() {
-    const value = slider.value;
+    const value = percent(slider.value);
+    const total = round2(valor1.value);
+    const taxes = round2(valor4.value);
+
+    const leftValue = round2((value / 100) * total);
+    const leftTaxes = round2((value / 100) * taxes);
+
+    const rightValue = round2(total - leftValue);
+    const rightTaxes = round2(taxes - leftTaxes);
+
     const sliderWidth = slider.offsetWidth;
     const thumbPos = (value / slider.max) * sliderWidth;
 
-    labeltop2.innerHTML = Number(valor1.value) === 0 ? "0" : valor1.value;
-    labelBottom.innerHTML = `${value}%`;
-    labelBottom2.innerHTML = `${Number(((value / 100) * Number(valor1.value)).toFixed(2))}$`;
+    labelBottom.innerHTML = `${round2(value)}%`;
+    labelBottom2.innerHTML = money(leftValue);
+    labelBottom3.innerHTML = `Taxes:${money(leftTaxes)}`;
 
-    labelBottom.style.left = thumbPos + 20 + "px";
-    labelBottom2.style.left = thumbPos + 20 + "px";
+    labelBottomR.innerHTML = `${round2(100 - value)}%`;
+    labelBottom2R.innerHTML = money(rightValue);
+    labelBottom3R.innerHTML = `Taxes:${money(rightTaxes)}`;
+
+    const rightPos = ((sliderWidth - thumbPos) / 2) + thumbPos;
+    const leftPos = thumbPos / 2;
+
+    [labelBottomR, labelBottom2R, labelBottom3R].forEach(el => {
+        el.style.left = `${rightPos}px`;
+    });
+
+    [labelBottom, labelBottom2, labelBottom3].forEach(el => {
+        el.style.left = `${leftPos}px`;
+    });
 }
 
-function buttonSkip(numeros) {
-    valor1.value = numeros;
-    valor2.value = "100";
-    valor3.value = "";
-    valor4.value = "";
+function errance (){
 
-    labeltop90.innerHTML = `${(Number(valor2.value) * 0.90).toFixed(2)}%`;
-    labeltop2_90.innerHTML = `${(Number(valor1.value) * 0.90).toFixed(2)}$`;
+    slider.value = "50";
+    pintarBarra(slider);
 
-    labeltop80.innerHTML = `${(Number(valor2.value) * 0.80).toFixed(2)}%`;
-    labeltop2_80.innerHTML = `${(Number(valor1.value) * 0.80).toFixed(2)}$`;
-
-    labeltop75.innerHTML = `${(Number(valor2.value) * 0.75).toFixed(2)}%`;
-    labeltop2_75.innerHTML = `${(Number(valor1.value) * 0.75).toFixed(2)}$`;
-
-    labeltop.innerHTML = `${(Number(valor2.value) * 1).toFixed(2)}%`;
-    labeltop2.innerHTML = `${(Number(valor1.value) * 1).toFixed(2)}$`;
-
-    slider.value = "0";
-    labelBottom.style.left = "0px";
-    labelBottom2.style.left = "0px";
     labelBottom.innerHTML = "0%";
-    labelBottom2.innerHTML = "0$";
-}
+    labelBottom2.innerHTML = "$0";
+    labelBottom3.innerHTML = "Taxes:$0";
 
-// RP = regular price
-// CSP = customer service price
-// MP = minimum price
-// AP = afiliate price
+    labelBottomR.innerHTML = "0%";
+    labelBottom2R.innerHTML = "$0";
+    labelBottom3R.innerHTML = "Taxes:$0";
 
-function unitsInfo(RP, CSP, MP, AP) {
+    [labelBottomR, labelBottom2R, labelBottom3R].forEach(el => {
+        el.style.left = "75%";
+    });
 
-    function setLabel(container, text, title = null) {
-        const p = document.createElement("p");
-        p.textContent = text;
+    [labelBottom, labelBottom2, labelBottom3].forEach(el => {
+        el.style.left = "25%";
+    });
 
-        if (title) {
-            p.title = title;
-        }
+    valor1.value="";
+    valor2.value="";
+    valor3.value="";
+    valor4.value="";
 
-        container.innerHTML = "";
-        container.appendChild(p);
-    }
+    document.querySelectorAll(".btn-secondary").forEach(btn => {
+    btn.style.backgroundColor = "#1F3A5F";
 
-    // Regular Price
-    setLabel(labeltop, "RP", "Regular Price");
-    setLabel(labeltop2, RP);
-
-    // CSP
-    setLabel(labeltop90, "CSP");
-    setLabel(labeltop2_90, CSP);
-
-    // MP
-    setLabel(labeltop80, "MP");
-    setLabel(labeltop2_80, MP);
-
-    // AP
-    setLabel(labeltop75, "AP");
-    setLabel(labeltop2_75, AP);
-}
-
-updateLabels();
-
-slider.addEventListener("input", updateLabels);
-
-deletebotton.addEventListener("click", () => {
-    buttonSkip("");
-    valor2.value = "";
-    labeltop2.innerHTML = "0";
+    total=0;
 });
+
+}
+
+function shortcutsuma(numeros) {
+    total += numeros;
+
+    
+}
+
+function shortcutresta(numeros) {
+    total -= numeros;
+
+    
+}
+
+function toggleColor(elemento) {
+    const colorActual = getComputedStyle(elemento).backgroundColor;
+
+    if (colorActual === "rgb(31, 58, 95)") {
+        elemento.style.backgroundColor = "#e63946";
+    } else {
+        elemento.style.backgroundColor = "#1F3A5F";
+    }
+}
+
+function procesarBoton(el, precio) {
+  const color = getComputedStyle(el).backgroundColor;
+
+  if (color === "rgb(31, 58, 95)") {
+    shortcutsuma(precio);
+  } else if (color === "rgb(230, 57, 70)") {
+    shortcutresta(precio);
+  }
+
+  valor1.value = round2(total);
+  toggleColor(el);
+}
+
 
 button.addEventListener("click", () => {
     calcular();
 });
 
-// Rotorazer
-rotorazerBasic.addEventListener("click", () => {
-    buttonSkip(149.85);
+
+slider.addEventListener("input", () => {
+    
+    pintarBarra(slider);
+    updateLabels();
+
 });
-rotorazerPlatinum.addEventListener("click", () => {
-    buttonSkip(194.7);
+
+deletebotton.addEventListener("click", () => {
+    
+    errance();
+
+});
+
+// Rotorazer
+rotorazerBasic.addEventListener("click", (e) => {
+
+    procesarBoton(e.currentTarget, 149.85);
+
+
+});
+rotorazerPlatinum.addEventListener("click", (e) => {
+    
+    procesarBoton(e.currentTarget, 194.7);
+
 });
 
 // Salud y Suplementos
-ingestibles.addEventListener("click", () => {
-    buttonSkip(39.95);
+ingestibles.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,79.95);
 });
-ingestiblesplus.addEventListener("click", () => {
-    buttonSkip(49.95);
+ingestiblesplus.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,99.95);
 });
-beflexible.addEventListener("click", () => {
-    buttonSkip(39.95);
+beflexible.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,39.95);
 });
-superthotics.addEventListener("click", () => {
-    buttonSkip(39.95);
+superthotics.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,39.95);
 });
-walkfitPlatinum.addEventListener("click", () => {
-    buttonSkip(19.95);
+walkfitPlatinum.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,19.95);
 });
 
 // AirDoctor Unidades
 ad1000.addEventListener("click", () => {
-    unitsInfo(700, 400, 359, 330);
+    
 });
 ad2000.addEventListener("click", () => {
-    unitsInfo(700, 400, 359, 330);
+    
 });
 ad3500.addEventListener("click", () => {
-    unitsInfo(500, 400, 359, 330);
+    
 });
 ad3500i.addEventListener("click", () => {
-    unitsInfo(700, 400, 359, 330);
+ 
 });
 ad4000.addEventListener("click", () => {
-    unitsInfo(800, 400, 359, 330);
+    
 });
 ad5500.addEventListener("click", () => {
-    unitsInfo(720, 400, 359, 330);
+    
 });
 ad5500i.addEventListener("click", () => {
-    unitsInfo(700, 400, 359, 330);
+    
 });
 
 // Filtros AD 1000
-ad1000set.addEventListener("click", () => {
-    buttonSkip(84.95);
+ad1000set.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,84.95);
 });
 
 // Filtros AD 2000
-ad2000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(120.57);
+ad2000OneYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,120.57);
 });
-ad2000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(226.98);
+ad2000TwoYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,226.98);
 });
-ad2000Hepa.addEventListener("click", () => {
-    buttonSkip(47.95);
+ad2000Hepa.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,47.95);
 });
-ad2000Carbon.addEventListener("click", () => {
-    buttonSkip(46.95);
+ad2000Carbon.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,46.95);
 });
-ad2000Prefilter.addEventListener("click", () => {
-    buttonSkip(15.99);
+ad2000Prefilter.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,15.99);
 });
 
 // Filtros AD 3000 / 3500
-ad3000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(162.99);
+ad3000OneYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,162.99);
 });
-ad3000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(305.89);
+ad3000TwoYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,305.89);
 });
-ad3000Hepa.addEventListener("click", () => {
-    buttonSkip(63.95);
+ad3000Hepa.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,63.95);
 });
-ad3000Carbon.addEventListener("click", () => {
-    buttonSkip(63.95);
+ad3000Carbon.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,63.95);
 });
-ad3000Prefilter.addEventListener("click", () => {
-    buttonSkip(20.95);
+ad3000Prefilter.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,20.95);
 });
 
 // Filtros AD 4000
-ad4000set.addEventListener("click", () => {
-    buttonSkip(89.95);
+ad4000set.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,89.95);
 });
 
 // Filtros AD 5000 / 5500
-ad5000OneYearComboPack.addEventListener("click", () => {
-    buttonSkip(335.75);
+ad5000OneYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,335.75);
 });
-ad5000TwoYearComboPack.addEventListener("click", () => {
-    buttonSkip(637.99);
+ad5000TwoYearComboPack.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,637.99);
 });
-ad5000Hepa.addEventListener("click", () => {
-    buttonSkip(133);
+ad5000Hepa.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,133);
 });
-ad5000Carbon.addEventListener("click", () => {
-    buttonSkip(131);
+ad5000Carbon.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,131);
 });
-ad5000Prefilter.addEventListener("click", () => {
-    buttonSkip(35);
+ad5000Prefilter.addEventListener("click", (e) => {
+     procesarBoton(e.currentTarget,35);
 });
+
+let pantalla = document.getElementById("pantalla");
+
+let numeroGuardado = null;
+let operacionPendiente = null;
+let esperandoNumero = false;
+
+function agregar(valor) {
+
+    if (esperandoNumero) {
+        pantalla.value = "";
+        esperandoNumero = false;
+    }
+
+    if (valor === "." && pantalla.value.includes(".")) {
+        return;
+    }
+
+    pantalla.value += valor;
+}
+
+function limpiar() {
+    pantalla.value = "";
+    numeroGuardado = null;
+    operacionPendiente = null;
+}
+
+function operar(op) {
+
+    if (numeroGuardado === null) {
+        numeroGuardado = parseFloat(pantalla.value);
+    } else {
+        calcular2();
+        numeroGuardado = parseFloat(pantalla.value);
+    }
+
+    operacionPendiente = op;
+    esperandoNumero = true;
+}
+
+function calcular2() {
+
+    if (operacionPendiente === null) return;
+
+    let numeroActual = parseFloat(pantalla.value);
+    let resultado;
+
+    if (operacionPendiente === "+") {
+        resultado = numeroGuardado + numeroActual;
+    }
+
+    if (operacionPendiente === "-") {
+        resultado = numeroGuardado - numeroActual;
+    }
+
+    if (operacionPendiente === "*") {
+        resultado = numeroGuardado * numeroActual;
+    }
+
+    if (operacionPendiente === "/") {
+        resultado = numeroGuardado / numeroActual;
+    }
+
+    pantalla.value = resultado;
+
+    numeroGuardado = null;
+    operacionPendiente = null;
+}
