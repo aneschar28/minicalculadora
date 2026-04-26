@@ -194,6 +194,20 @@ function calcular() {
 
         valor2.value="";
         valor3.value="";
+
+    } else if (caso6){
+        const v1 = round2(valor1.value);
+        const v2 = round2(valor2.value);
+        const v4 = round2(valor4.value);
+        
+
+        slider.value = percent(valor2.value);
+        pintarBarra(slider);
+
+        updateLabels();
+
+        valor2.value="";
+        valor3.value="";
     }
 }
 
@@ -465,7 +479,7 @@ function operar(op) {
     if (numeroGuardado === null) {
         numeroGuardado = parseFloat(pantalla.value);
     } else {
-        calcular2();
+        calcular3();
         numeroGuardado = parseFloat(pantalla.value);
     }
 
@@ -473,7 +487,7 @@ function operar(op) {
     esperandoNumero = true;
 }
 
-function calcular2() {
+function calcular3() {
 
     if (operacionPendiente === null) return;
 
