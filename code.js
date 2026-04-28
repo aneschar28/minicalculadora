@@ -95,6 +95,29 @@ function money(n) {
 
 function percent(n) {
     return round2(n);
+    
+}
+
+function memoria(a,b,c,d) {
+
+    if (Number(valor1.value) === 0) {
+        
+        valor1.value = a;
+    }else if (Number(valor1.value) === a) {
+        
+        valor1.value = b;
+    }else if (Number(valor1.value) === b) {
+        
+        valor1.value = c;
+    }else if (Number(valor1.value) === c) {
+        
+        valor1.value = d;
+    }else if (Number(valor1.value) === d) {
+        
+        valor1.value = a;
+    }
+    
+    
 }
 
 function calcular2() {
@@ -365,25 +388,25 @@ walkfitPlatinum.addEventListener("click", (e) => {
 });
 
 // AirDoctor Unidades
-ad1000.addEventListener("click", () => {
+ad1000.addEventListener("click", () => { memoria(3,4,5,6)
     
 });
-ad2000.addEventListener("click", () => {
+ad2000.addEventListener("click", () => { memoria(3,6,9,12)
     
 });
-ad3500.addEventListener("click", () => {
+ad3500.addEventListener("click", () => { memoria(3,20.8,9,111.8)
     
 });
-ad3500i.addEventListener("click", () => {
+ad3500i.addEventListener("click", () => { memoria(10,20.8,9,350.8)
  
 });
-ad4000.addEventListener("click", () => {
+ad4000.addEventListener("click", () => { memoria(11,20,9,700)
     
 });
-ad5500.addEventListener("click", () => {
+ad5500.addEventListener("click", () => { memoria(11,20,9,700)
     
 });
-ad5500i.addEventListener("click", () => {
+ad5500i.addEventListener("click", () => { memoria(11,20,9,700)
     
 });
 
