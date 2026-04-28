@@ -403,7 +403,7 @@ ad4000.addEventListener("click", () => { memoria(799,549,499)
 ad5500.addEventListener("click", () => { memoria(999,699,599)
     
 });
-ad5500i.addEventListener("click", () => { memoria(1049,749,749)
+ad5500i.addEventListener("click", () => { memoria(1049,749.01,749)
     
 });
 
